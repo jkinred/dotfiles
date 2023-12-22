@@ -1,0 +1,14 @@
+[Unit]
+Description=Idle manager for Wayland
+Documentation=man:swayidle(1)
+BindsTo=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/bin/swayidle -w \
+            timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+            timeout 630 'swaylock -f' \
+            before-sleep 'swaylock -f'
+
+[Install]
+WantedBy=sway-session.target

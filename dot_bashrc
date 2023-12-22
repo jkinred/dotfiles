@@ -1,0 +1,20 @@
+# ENABLE DEBUG SLOW SHELL STARTUP
+# https://mdjnewman.me/2017/10/debugging-slow-bash-startup-files/
+#exec 5> >(ts -i "%.s" >> /tmp/timestamps)
+#export BASH_XTRACEFD="5"
+#set -x
+# END DEBUG SLOW SHELL STARTUP
+
+source /etc/profile.d/bash_completion.sh
+
+# Use vim key bindings
+set -o vi
+
+export PATH=~/.local/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+for file in ~/.bashrc.d/*; do
+    #echo "Sourcing ${file}"
+    source $file;
+done
+
+eval "$(direnv hook bash)"

@@ -1,0 +1,39 @@
+[user]
+	name = Jonathan Kinred
+	email = jkinred@linuxfoundation.org
+	signingkey = DB9865BB77E4A2B2
+[push]
+	default = simple
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[core]
+	excludesfile = /home/jonathan/.gitignore
+[branch]
+	autosetuprebase = always
+[alias]
+	serve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/
+	switch = !legit switch
+	sync = !legit sync
+	publish = !legit publish
+	unpublish = !legit unpublish
+	undo = !legit undo
+	branches = !legit branches
+	stag = tag -s
+	logf = log --graph --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%an%C(reset)%C(bold yellow)%d%C(reset) %C(dim white)- %s%C(reset)' --all
+[gpg]
+	program = gpg2
+[commit]
+	gpgsign = true
+	template = ~/.git-commit-template
+[tag]
+	sort = -version:refname
+[url "ssh://git@github.com/LF-Engineering"]
+	insteadOf = https://github.com/LF-Engineering
+[url "ssh://git@github.com/LF-Certification"]
+	insteadOf = https://github.com/LF-Certification
+[init]
+	defaultBranch = main
+[merge]
+	tool = vimdiff

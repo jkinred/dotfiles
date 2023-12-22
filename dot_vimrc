@@ -1,0 +1,284 @@
+set nocompatible
+filetype off
+set encoding=UTF-8
+set diffopt+=vertical
+
+call plug#begin()
+
+" Plugins that need to load first
+Plug 'scrooloose/nerdtree'
+
+" Normal plugins
+Plug 'editorconfig/editorconfig-vim'
+Plug 'lifepillar/vim-solarized8'
+Plug 'chrisbra/vim-diff-enhanced'
+Plug 'ervandew/supertab'
+Plug 'godlygeek/tabular'
+Plug 'hashivim/vim-terraform'
+Plug 'hashivim/vim-packer'
+Plug 'jamessan/vim-gnupg'
+Plug 'majutsushi/tagbar'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'plytophogy/vim-virtualenv'
+Plug 'PieterjanMontens/vim-pipenv'
+Plug 'preservim/vim-markdown'
+Plug 'saltstack/salt-vim'
+"Plug 'scrooloose/syntastic'
+Plug 'tomtom/tlib_vim'
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-eunuch'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/TaskList.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'gcmt/taboo.vim'
+Plug 'gregsexton/gitv'
+"Plug 'ycm-core/YouCompleteMe'
+Plug 'vim-scripts/YankRing.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'yggdroot/indentline'
+Plug 'psf/black'
+Plug 'junegunn/fzf.vim'
+Plug 'pearofducks/ansible-vim'
+Plug 'z0mbix/vim-shfmt'
+Plug 'justinmk/vim-sneak'
+"Plug 'dense-analysis/ale'
+Plug 'wellle/targets.vim'
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Useful plugins which are only occasionally needed
+"Plug 'fatih/vim-go'
+
+" Plugs that have to be loaded last
+Plug 'ryanoasis/vim-devicons'
+
+call plug#end()
+
+filetype plugin indent on
+
+let mapleader=" "
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+if has("autocmd")
+  filetype plugin indent on
+endif
+
+set directory=$HOME/.vim/swapfiles//
+
+set background=light
+
+" Inspect $TERM instad of t_Co as it works in neovim as well
+if &term =~ '256color'
+  " Enable true (24-bit) colors instead of (8-bit) 256 colors.
+  " :h true-color
+  if has('termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+  endif
+  colorscheme solarized8
+endif
+
+set wildmode=longest:full
+set wildmenu
+set showcmd            " Show (partial) command in status line.
+set showmatch          " Show matching brackets.
+set ignorecase         " Do case insensitive matching
+set smartcase          " Do smart case matching
+set incsearch          " Incremental search
+set autowrite          " Automatically save before commands like :next and :make
+set hidden             " Hide buffers when they are abandoned
+"set mouse=a            " Enable mouse usage (all modes)
+set cursorline          " Underline the current line
+set ls=2                " Show the statusline at the bottom
+set history=111         " Restore 111 things from viminfo
+"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{fugitive#statusline()}%#ErrorMsg#%{SyntasticStatuslineFlag()}%*%=%-14.(%l,%c%V%)\ %P
+"set statusline=[%n]\ %<%.99f\ %h%w%m%r%y%{fugitive#statusline()}%#ErrorMsg#%*%=%-14.(%l,%c%V%)\ %P
+set viminfo=\"4,'4,/111,:111,h,f0
+"            |  |  |    |    | +file marks 0-9,A-Z 0=NOT stored
+"            |  |  |    |    +disable 'hlsearch' loading viminfo
+"            |  |  |    +command-line history saved
+"            |  |  +search history saved
+"            |  +files marks saved
+"            +lines saved each register (old name for <, vi6.2)
+"
+"if &t_Co > 2 || has("gui_running")
+"  syntax enable
+"  set termguicolors
+"endif
+
+" Display insert, replace, visual in the command area
+"set showmode
+
+" Highlight search terms
+" ----------------------
+set hlsearch
+
+"set expandtab
+"set textwidth=79
+"set shiftround
+"set autoindent
+set sessionoptions=blank,buffers,curdir,folds,globals,help,localoptions,options,resize,tabpages,winsize,winpos
+
+" GPG
+" ---
+let g:GPGExecutable = "gpg2 --trust-model always"
+
+" Tagbar
+" ------
+let g:tagbar_autofocus = 1
+
+" vim-virtualenv
+" ------
+let g:virtualenv_directory = "./"
+"let g:virtualenv_directory = "/home/jonathan/.local/share/virtualenvs"
+
+" NERDTree
+" --------
+let NERDTreeIgnore = ['.*\.egg-info', '__pycache__', '\.pyc$', '\.pyo$', '\.class$']
+let NERDTreeHijackNetrw=1
+
+" Python
+" ------
+autocmd FileType python set omnifunc=pythoncomplete#Complete
+set completeopt=menuone,longest,preview
+let g:SuperTabDefaultCompletionType = "context"
+"Highlight as error when chars go past column 79
+"autocmd FileType python highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"autocmd FileType python match OverLength /\%80v.*/
+"autocmd FileType python compiler nose
+"autocmd FileType python set expandtab tabstop=4 shiftwidth=4 softtabstop=4 autoindent
+
+" Ruby
+" ------
+"autocmd FileType ruby set expandtab tabstop=2 shiftwidth=2 softtabstop=2 autoindent
+
+" HTML
+" ----
+"autocmd FileType htmldjango set expandtab tabstop=2 shiftwidth=2 softtabstop=2 autoindent
+
+" YAML
+" ----
+"autocmd FileType yaml set expandtab tabstop=2 shiftwidth=2 softtabstop=2 autoindent
+"let g:syntastic_yaml_checkers = ['yamllint']
+
+" If you prefer the Omni-Completion tip window to close when a selection is
+" made, these lines close it on movement in insert mode or when leaving
+" insert mode
+autocmd CursorMovedI * if pumvisible() == 0|silent! pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+autocmd FileType rst setlocal spell spelllang=en_au
+autocmd FileType text setlocal spell spelllang=en_au
+
+autocmd BufNewFile,BufRead *.gradle setf groovy
+
+" Generic key bindings
+" Use space for folding
+nnoremap <space> za
+vnoremap <space> zf
+" Navigate left and right between windows
+map <C-h> <C-w>h
+map <C-l> <C-w>l
+" Turn off search highlighting
+nmap <silent> <Leader>/ :nohlsearch<CR>
+" Navigate quickfix errors
+nnoremap cn :cnext<CR>
+noremap cp :cprevious<CR>
+nnoremap qf :cwindow<CR>
+nnoremap <Leader>j :b#<CR>
+
+" Key bindings for addons
+" Bring up the task list
+map T <Plug>TaskList
+map <Leader>t :TagbarToggle<CR>
+map <Leader>n :NERDTreeToggle<CR>
+map <Leader>g :Rg! 
+map <Leader>b :Buffers<CR>
+map <Leader>f :Files<CR>
+
+" XML editing options
+"autocmd FileType xml set tabstop=2
+"autocmd FileType xml set shiftwidth=2
+"autocmd FileType xml set softtabstop=2
+
+" Go editing options
+"autocmd FileType go setlocal tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab
+autocmd FileType go setlocal nolist
+"autocmd FileType go let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc,*.class
+"let g:ctrlp_custom_ignore = { 'dir': '\v[\/](target|public)' }
+"let g:ctrlp_working_path_mode = 0
+
+" Display punctuation marks for cleaner code
+set list
+set listchars=tab:>.,trail:.,extends:#,nbsp:.
+
+" Keep at least two lines of context at top and bottom of screen
+set scrolloff=2
+
+autocmd FileType *
+\ if &omnifunc != '' |
+\   call SuperTabChain(&omnifunc, "<c-p>") |
+\   call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+\ endif
+
+autocmd QuickFixCmdPost *grep* cwindow
+
+" Markdown configuration
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_conceal = 0
+
+" Toggle paste mode
+set pastetoggle=<F2>
+
+" Toggle line numbers
+map <F3> :set nonumber!<CR>:set foldcolumn=0<CR>
+
+" Toggle background between light and dark
+map <F4> :let &background = ( &background == "dark"? "light" : "dark")<CR>
+"call togglebg#map("<F4>")
+
+" Turn off line indent indicators
+map <F5> :IndentLinesToggle<CR>
+map <F5> :IndentLinesToggle<CR>
+
+" Format JSON with jq
+nnoremap moj :%!jq '.'<CR>
+" Toggle paste mode
+nnoremap mop :set invpaste<CR>
+" Send selection to clipboard
+xnoremap moc :w !gpaste-client add<CR>
+
+" Ensure YouCompleteMe uses the virtualenv interpreter
+let g:ycm_python_interpreter_path = 'python'
+
+"let g:syntastic_error_symbol = '✘'
+"let g:syntastic_warning_symbol = "▲"
+"let g:syntastic_check_on_wq = 0
+"autocmd FileType python let g:syntastic_python_checkers = ['python', 'pylint', 'mypy']
+
+nnoremap <silent> <F6> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+let g:tlTokenList = ["FIXME", "TODO", "XXX", "NOTE"]
+au BufNewFile,BufRead /dev/shm/gopass.* setlocal noswapfile nobackup noundofile
+set colorcolumn=88,100
+"if executable('ag')
+"  let g:ackprg = 'ag --vimgrep'
+"endif
+au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" Terraform
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
+com! FormatJSON %!jq .
