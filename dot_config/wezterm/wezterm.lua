@@ -31,7 +31,7 @@ end)
 
 local act = wezterm.action
 
-config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 8000 }
 config.keys = {
   {
     key = '[',

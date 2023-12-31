@@ -1,74 +1,54 @@
 # Read `man 5 sway` for a complete reference.
 
+#
 ### Variables
+#
 
-set $mod Mod4
+    set $mod Mod4
 
-# Vim keybindings
-set $left h
-set $down j
-set $up k
-set $right l
+    # Vim keybindings
+    set $left h
+    set $down j
+    set $up k
+    set $right l
 
-# Preferred terminal emulator
-set $term wezterm
+# NOTE: Font is not actually used, but size is
+font pango:Hack 14
 
 bar {
     swaybar_command waybar
 }
 
-include /etc/sway/config.d/*
-include $HOME/.config/sway/config.d/*
+smart_gaps on
+gaps inner 10
 
-# Volume/brightness popup
-set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
-
-exec wl-paste -t text --watch clipman store --no-persist
-
-# Application launcher
-#set $menu dmenu_path | dmenu | xargs swaymsg exec --
-set $menu fuzzel | xargs swaymsg exec --
-
-exec_always --no-startup-id nm-applet
-
-font pango:Hack 14
 
 ### Output configuration
-# NOTE: Monitor layouts are managed by kanshi in ~/.config/kanshi/config
-#exec_always "systemctl --user restart kanshi.service"
 
-output * bg $HOME/Pictures/background.png stretch
+    # NOTE: Monitor layouts are managed by kanshi in ~/.config/kanshi/config
+    output * bg $HOME/Pictures/background.png stretch
 
 ### Input configuration
-#
-input "type:keyboard" {
-    xkb_options ctrl:nocaps
-}
 
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
+    input "type:keyboard" {
+        xkb_options ctrl:nocaps
+    }
 
 ### Key bindings
-#
-# Basics:
-#
+
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+Return exec wezterm
 
     # Kill focused window
     bindsym $mod+Shift+q kill
 
-    # Start your launcher
-    bindsym $mod+d exec $menu
+    # Start an app launcher
+    bindsym $mod+d exec fuzzel | xargs swaymsg exec --
+    #bindsym $mod+d exec dmenu_path | dmenu | xargs swaymsg exec --
+
+    bindsym $mod+Shift+s exec grim -g "$(slurp -d -w 4 -c '#ff0000ff')" - | $HOME/.local/bin/satty --filename - --output-filename ~/Pictures/Screenshots/satty-$(date '+%Y%m%d-%H:%M:%S').png
+
+    # Lock the screen
     bindsym $mod+Shift+x exec swaylock
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -81,6 +61,8 @@ input "type:keyboard" {
     # Reload the configuration file
     bindsym $mod+Shift+c reload
 
+    bindsym $mod+c exec $HOME/.local/bin/toggle-colour-mode
+
     # Exit sway (logs you out of your Wayland session)
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
@@ -91,7 +73,6 @@ input "type:keyboard" {
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
-    # Or use $mod+[up|down|left|right]
     bindsym $mod+Left focus left
     bindsym $mod+Down focus down
     bindsym $mod+Up focus up
@@ -102,13 +83,13 @@ input "type:keyboard" {
     bindsym $mod+Shift+$down move down
     bindsym $mod+Shift+$up move up
     bindsym $mod+Shift+$right move right
-    # Ditto, with arrow keys
     bindsym $mod+Shift+Left move left
     bindsym $mod+Shift+Down move down
     bindsym $mod+Shift+Up move up
     bindsym $mod+Shift+Right move right
+
 #
-# Workspaces:
+# Workspaces
 #
     # Switch to workspace
     bindsym $mod+1 workspace number 1
@@ -121,6 +102,7 @@ input "type:keyboard" {
     bindsym $mod+8 workspace number 8
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
+
     # Move focused container to workspace
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
@@ -132,10 +114,9 @@ input "type:keyboard" {
     bindsym $mod+Shift+8 move container to workspace number 8
     bindsym $mod+Shift+9 move container to workspace number 9
     bindsym $mod+Shift+0 move container to workspace number 10
-    # Note: workspaces can have any name you want, not just numbers.
-    # We just use 1-10 as the default.
+
 #
-# Layout stuff:
+# Layout stuff
 #
     # You can "split" the current object of your focus with
     # $mod+b or $mod+v, for horizontal and vertical splits
@@ -159,73 +140,56 @@ input "type:keyboard" {
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
-#
-# Scratchpad:
-#
-    # Sway has a "scratchpad", which is a bag of holding for windows.
-    # You can send windows there and get them back later.
 
+
+#
+# Scratchpad
+#
     # Move the currently focused window to the scratchpad
     bindsym $mod+Shift+minus move scratchpad
 
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
-#
-# Resizing containers:
-#
-mode "resize" {
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
-
-    # Ditto, with arrow keys
-    bindsym Left resize shrink width 10px
-    bindsym Down resize grow height 10px
-    bindsym Up resize shrink height 10px
-    bindsym Right resize grow width 10px
-
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+r mode "resize"
 
 #
-# Status Bar:
+# Resizing containers
 #
-# Read `man 5 sway-bar` for more information about this section.
-#bar {
-#    position top
-#
-#    # When the status_command prints a new line to stdout, swaybar updates.
-#    # The default just shows the current date and time.
-#    status_command i3status
-#
-#    colors {
-#        statusline #ffffff
-#        background #323232
-#        inactive_workspace #32323200 #32323200 #5c5c5c
-#    }
-#
-#}
+    mode "resize" {
+        # left will shrink the containers width
+        # right will grow the containers width
+        # up will shrink the containers height
+        # down will grow the containers height
+        bindsym $left resize shrink width 10px
+        bindsym $down resize grow height 10px
+        bindsym $up resize shrink height 10px
+        bindsym $right resize grow width 10px
+
+        # Ditto, with arrow keys
+        bindsym Left resize shrink width 10px
+        bindsym Down resize grow height 10px
+        bindsym Up resize shrink height 10px
+        bindsym Right resize grow width 10px
+
+        # Return to default mode
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+    }
+    bindsym $mod+r mode "resize"
+
 
 # Show which windows are using XWayland
 for_window [shell="xwayland"] title_format "[XWayland] %title"
+for_window [app_id="org.gnome.Calculator"] border none, floating enable
+for_window [instance="dynalist"] floating enable
 
 # Zoom Meeting App
-for_window [app_id="Zoom" title="^Zoom$"] border none, floating enable
-# For specific Zoom windows
-for_window [app_id="Zoom" title="^(Zoom|About)$"] border pixel, floating enable
-for_window [app_id="Zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
-# Open Zoom Meeting windows on a new workspace (a bit hacky)
-for_window [app_id="Zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
-for_window [app_id="org.gnome.Calculator"] border none, floating enable
+#for_window [app_id="Zoom" title="^Zoom$"] border none, floating enable
+## For specific Zoom windows
+#for_window [app_id="Zoom" title="^(Zoom|About)$"] border pixel, floating enable
+#for_window [app_id="Zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
+## Open Zoom Meeting windows on a new workspace (a bit hacky)
+#for_window [app_id="Zoom" title="Zoom Meeting(.*)?"] workspace next_on_output --create, move container to workspace current, floating disable, inhibit_idle open
 
 # Workspace movement between monitors (vi keys)
 bindsym $mod+Control+Shift+$right move workspace to output right
@@ -239,25 +203,44 @@ bindsym $mod+Control+Shift+Left move workspace to output left
 bindsym $mod+Control+Shift+Down move workspace to output down
 bindsym $mod+Control+Shift+Up move workspace to output up
 
-#set $refresh_i3status killall -SIGUSR1 i3status
 #bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.config/sway/volume-max-100.sh up 5 && $refresh_i3status
 #bindsym XF86AudioLowerVolume exec --no-startup-id ~/.config/sway/volume-max-100.sh down 5 && $refresh_i3status
 #bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 #bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# Use wob for brightness/audio popup display
+set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
+
+# Volume control
 bindsym XF86AudioRaiseVolume exec pamixer -ui 5 && pamixer --get-volume > $WOBSOCK
 bindsym XF86AudioLowerVolume exec pamixer -ud 5 && pamixer --get-volume > $WOBSOCK
 bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $WOBSOCK ) || pamixer --get-volume > $WOBSOCK
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Monitor brightness
 bindsym XF86MonBrightnessUp exec light -S "$(light -G | awk '{ print int(($1 + .72) * 1.4) }')" && light -G | cut -d'.' -f1 > $WOBSOCK
 bindsym XF86MonBrightnessDown exec light -S "$(light -G | awk '{ print int($1 / 1.4) }')" && light -G | cut -d'.' -f1 > $WOBSOCK
 
 # Media player controls
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+# Fn+F10
+bindsym XF86Go exec --no-startup-id playerctl play-pause
 bindsym --locked XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
+# Fn+F11
+bindsym Cancel exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+# Fn+F9
+bindsym XF86Messenger exec --no-startup-id playerctl previous
 
-exec wl-paste -t text --watch clipman store --no-persist
+exec swaync
+bindsym $mod+Shift+n exec swaync-client --toggle-panel --skip-wait
+
+exec wl-paste --type text --watch clipman store
+
 exec_always systemctl --user start sway-session.target
+exec dbus-update-activation-environment --all
 #exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway[
+
+include /etc/sway/config.d/*
+include $HOME/.config/sway/config.d/*

@@ -13,7 +13,7 @@ return {
       custom_colorcolumn = { python = "88" },
     },
   },
-  { import = "astrocommunity.editing-support.yanky-nvim" },
+  --{ import = "astrocommunity.editing-support.yanky-nvim" },
   { import = "astrocommunity.editing-support.rainbow-delimiters-nvim" },
   { import = "astrocommunity.editing-support.suda-vim" },
   { import = "astrocommunity.git.blame-nvim" },

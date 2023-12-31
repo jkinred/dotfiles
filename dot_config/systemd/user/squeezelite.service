@@ -1,0 +1,11 @@
+[Unit]
+Description=SqueezeLite Music Player
+Documentation=man:squeezelite(1)
+BindsTo=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=/bin/squeezelite -n "%H"
+
+[Install]
+WantedBy=sway-session.target

@@ -6,9 +6,10 @@ BindsTo=sway-session.target
 [Service]
 Type=simple
 ExecStart=/bin/swayidle -w \
-            timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-            timeout 630 'swaylock -f' \
-            before-sleep 'swaylock -f'
+            timeout 600 '/bin/swaylock --daemonize' \
+            timeout 900 '/bin/swaymsg "output * power off"' \
+            resume '/bin/swaymsg "output * power on"' \
+            before-sleep '/bin/swaylock --daemonize'
 
 [Install]
 WantedBy=sway-session.target

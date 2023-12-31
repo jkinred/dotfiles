@@ -17,8 +17,8 @@ return {
     },
   },
 
-  -- Set colorscheme to use
-  colorscheme = "catppuccin-macchiato",
+  -- Set colorscheme = 'catppuccin-macchiato',
+  colorscheme = 'catppuccin-macchiato',
 
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
