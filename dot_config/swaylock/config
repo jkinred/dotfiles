@@ -5,9 +5,8 @@ timestr=%H:%m
 datestr=%A, %d/%m
 effect-blur=4x2
 effect-vignette=0.2:0.5
-grace=0
+grace=5
 fade-in=1
-indicator
 effect-scale=0.4
 
 ignore-empty-password
