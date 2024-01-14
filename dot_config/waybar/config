@@ -1,0 +1,258 @@
+{
+  "layer": "top", // Waybar at top layer
+  "output": "Lenovo Group Limited P27h-20 V9075P1R",
+  "position": "top", // Waybar position (top|bottom|left|right)
+  //"height": 55,
+  "margin": "0 0 0 0",
+  //"width": 1350, // Waybar width
+  // Choose the order of the modules
+  "modules-left": [
+    "custom/launcher",
+    "sway/workspaces",
+    //"custom/toggle-waybar-bg",
+    "custom/scratchpad-indicator",
+    "tray"
+    //"sway/mode"
+    //"mpd#2",
+    //"mpd#3",
+    //"mpd#4",
+    //"mpd"
+  ],
+  "modules-center": ["clock", "sway/mode"],
+  "modules-right": [
+    "battery",
+    "backlight",
+    "pulseaudio",
+    "cpu",
+    "memory",
+    "network",
+    "custom/clipboard",
+    "custom/notification",
+  ],
+
+  // Modules configuration
+
+  "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "<span foreground='red'><sup></sup></span>",
+      "none": "",
+      "dnd-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-none": "",
+      "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "inhibited-none": "",
+      "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+      "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client --subscribe-waybar",
+    "on-click": "swaync-client --toggle-panel --skip-wait",
+    "on-click-right": "swaync-client --toggle-dnd --skip-wait",
+    "escape": true
+  },
+  "sway/workspaces": {
+    "all-outputs": true,
+    "enable-bar-scroll": true,
+    "disable-scroll-wraparound": true,
+    //"format": "{icon}",
+    //"format": "< %g >",
+    //"format_focused" : "< %g ● >",
+    //"format-icons": {
+    //  "1": "",
+    //  "2": "",
+    //  "3": "",
+    //  "4": "",
+    //  "5": "",
+    //  "6": "",
+    //  "7": "",
+    //  "8": "",
+    //  "9": "",
+    //  "10": ""
+    //}
+  },
+  //"mpd": {
+  //  "tooltip": true,
+  //  "tooltip-format": "{artist} - {album} - {title} - Total Time : {totalTime:%M:%S}",
+  //  "format": " {elapsedTime:%M:%S}",
+  //  "format-disconnected": "⚠  Disconnected",
+  //  "format-stopped": " Not Playing",
+  //  "on-click": "mpc toggle",
+  //  "state-icons": {
+  //    "playing": "",
+  //    "paused": ""
+  //  }
+  //},
+  //"mpd#2": {
+  //  "format": "",
+  //  "format-disconnected": "",
+  //  "format-paused": "",
+  //  "format-stopped": "",
+  //  // Commands to execute on events
+  //  "on-click": "mpc -q pause && mpc -q prev && mpc -q start"
+  //},
+  //"mpd#3": {
+  //  "interval": 1,
+  //  "format": "{stateIcon}",
+  //  "format-disconnected": "",
+  //  "format-paused": "{stateIcon}",
+  //  "format-stopped": "",
+  //  "state-icons": {
+  //    "paused": "",
+  //    "playing": ""
+  //  },
+  //  // Commands to execute on events
+  //  "on-click": "mpc toggle"
+  //},
+  //"mpd#4": {
+  //  "format": "",
+  //  "format-disconnected": "",
+  //  "format-paused": "",
+  //  "format-stopped": "",
+  //  // Commands to execute on events
+  //  "on-click": "mpc -q pause && mpc -q next && mpc -q start"
+  //},
+  //"custom/toggle-waybar-bg": {
+  //  "on-click": "~/.config/waybar/scripts/bg-toggle.sh",
+  //  "tooltip": "Toggle background on/off",
+  //  "format": "Bg  "
+  //},
+  "custom/scratchpad-indicator": {
+      "interval": 3,
+      "return-type": "json",
+      "format": "🗗 {}",
+      "on-click": "exec swaymsg 'scratchpad show'",
+      "on-click-right": "exec swaymsg 'move scratchpad'",
+      "exec": "swaymsg -t get_tree | jq --unbuffered --compact-output '(recurse(.nodes[]) | select(.name == \"__i3_scratch\") | .focus) as $scratch_ids | [..  | (.nodes? + .floating_nodes?) // empty | .[] | select(.id |IN($scratch_ids[]))] as $scratch_nodes | if ($scratch_nodes|length) > 0 then { text: \"\\($scratch_nodes | length)\", tooltip: $scratch_nodes | map(\"\\(.app_id // .window_properties.class) (\\(.id)): \\(.name)\") | join(\"\\n\") } else empty end'"
+  },
+  "custom/mpd": {
+    "format": " {title} - {artist}",
+    "interval": 5,
+    "exec": "mpc current --format='\"title\":\"%title%\",\"artist\":\"%artist%\"'"
+  },
+  "sway/mode": {
+    "format": "<span style=\"italic\">{}</span>"
+  },
+  "sway/window": {
+    "format": "~ {app_id}"
+  },
+  "tray": {
+    "icon-size": 20,
+    "spacing": 5
+  },
+  "clock": {
+    "interval": 1,
+    "format": "{:%a %d %b  %H:%M}", // 24 hour format
+    "format-alt": "{:%a %d %b  %H:%M:%S}", // 24 hour format
+    "timezones": ["", "Etc/UTC"],
+    "tooltip-format": "<span size='14pt' font='Hack Nerd
+    Font'><b>{calendar}</b></span>",
+    "on-click-middle": "gnome-clocks",
+    "calendar": {
+      "mode": "month",
+      "mode-mon-col": 3,
+      "on-scroll": 1,
+      "on-click-right": "mode",
+      "format": {
+        "months": "<span color='#ffead3'>{}</span>",
+        "days": "<span color='#ecc6d9'>{}</span>",
+        "weeks": "<span color='#99ffdd'>W{}</span>",
+        "weekdays": "<span color='#ffcc66'>{}</span>",
+        "today": "<span size='16pt' color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-click-forward": "tz_up",
+      "on-click-backward": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    },
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "﬙ {usage: >3}%",
+    "on-click": "wezterm -e htop --tree --sort-key PERCENT_CPU"
+  },
+  "memory": {
+    "interval": 10,
+    "format": " {: >3}%",
+    "on-click": "wezterm -e htop --tree --sort-key PERCENT_MEM"
+  },
+  "temperature": {
+    // "thermal-zone": 2,
+    "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+    "critical-threshold": 80,
+    // "format-critical": "{temperatureC}°C ",
+    "format": "  {temperatureC}°C"
+  },
+  "backlight": {
+    // "device": "acpi_video1",
+    "format": "{icon} {percent: >3}%",
+    "format-icons": ["", ""],
+    // "on-scroll-down": "brightnessctl -c backlight set 5%-",
+    "on-scroll-down": "light -U 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
+    // "on-scroll-up": "brightnessctl -c backlight set +5%"
+    "on-scroll-up": "light -A 5 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob"
+  },
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 25,
+      "critical": 10
+    },
+    "format": "{icon} {capacity: >3}%",
+    "format-full": "",
+    //"format-icons": ["", "", "", "", ""]
+    "format-icons": ["", "", "", "", "", "", "", "", "", ""]
+  },
+  "network": {
+    "interval": 20,
+    "format": "⚠  Disabled",
+    "format-wifi": "  {essid} ({signalStrength}%)",
+    "tooltip": true,
+    "tooltip-format-wifi": "{ifname}: {ipaddr}/{cidr}\n {bandwidthUpBytes} /  {bandwidthDownBytes}",
+    "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}\n {bandwidthUpBytes} /  {bandwidthDownBytes}",
+    "format-ethernet": "  Wired",
+    "format-disconnected": "⚠  Disconnected",
+    "on-click": "~/.config/waybar/scripts/wifi.sh",
+  },
+  "pulseaudio": {
+    "scroll-step": 1,
+    "format": "{icon} {volume: >3}%",
+    "format-bluetooth": "{icon} {volume: >3}%",
+    "format-muted": " muted",
+    "format-icons": {
+      "headphones": "",
+      "handsfree": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", ""]
+    },
+    "on-click": "pavucontrol",
+    "on-scroll-up": "pamixer -ui 2 && pamixer --get-volume > $SWAYSOCK.wob",
+    "on-scroll-down": "pamixer -ud 2 && pamixer --get-volume > $SWAYSOCK.wob"
+  },
+  "custom/power": {
+    "format": "⏻",
+    "on-click": "swaynag -t warning -m 'Do you really want to exit sway?' -B 'Yes' 'swaymsg exit'",
+    "tooltip": false
+  },
+  "custom/launcher": {
+    "format": " ",
+    //"on-click": "exec nwg-drawer -c 7 -is 70 -spacing 23",
+    "on-click": "exec fuzzel | xargs swaymsg exec --",
+    "tooltip": false
+  },
+  "custom/clipboard": {
+    "format": "󰅌",
+    "interval": "once",
+    "return-type": "json",
+    "on-click": "clipman pick --tool=CUSTOM --tool-args='fuzzel -d'",
+    "exec": "printf '{\"tooltip\":\"%s\"}' $(clipman show-history | jq length)",
+    "exec-if": "[ -x \"$(command -v clipman)\" ] && [ $(clipman show-history | jq length) -gt 0 ]",
+  }
+}
