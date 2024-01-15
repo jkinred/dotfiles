@@ -11,6 +11,7 @@ if wezterm.config_builder then
 end
  
 config.tab_bar_at_bottom = true
+config.pane_focus_follows_mouse = true
 
 -- This is where you actually apply your config choices
 
