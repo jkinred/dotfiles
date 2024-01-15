@@ -97,8 +97,8 @@ config.keys = {
     action = act.SpawnTab 'CurrentPaneDomain',
   },
   {
-    key = ':',
-    mods = 'LEADER|SHIFT',
+    key = ',',
+    mods = 'LEADER',
     action = act.PromptInputLine {
       description = 'Tab name',
       action = wezterm.action_callback(function(window, pane, line)
