@@ -1,88 +1,43 @@
--- Pull in the wezterm API
 local wezterm = require 'wezterm'
 
--- This table will hold the configuration.
+local act = wezterm.action
 local config = {}
 
--- In newer versions of wezterm, use the config_builder which will
--- help provide clearer error messages
+
 if wezterm.config_builder then
   config = wezterm.config_builder()
 end
  
-config.tab_bar_at_bottom = true
-config.pane_focus_follows_mouse = true
-
--- This is where you actually apply your config choices
-
--- For example, changing the color scheme:
 config.color_scheme = 'Catppuccin Macchiato'
 config.enable_scroll_bar = true
 config.font = wezterm.font 'Hack'
 config.font_size = 18.0
+config.pane_focus_follows_mouse = true
+config.tab_bar_at_bottom = true
+config.use_fancy_tab_bar = false
+config.window_background_opacity = 0.9
 
--- Show which key table is active in the status area
-wezterm.on('update-right-status', function(window, pane)
-  local name = window:active_key_table()
-  if name then
-    name = 'TABLE: ' .. name
-  end
-  window:set_right_status(name or '')
-end)
+-- Automatically connect to a running domain
+config.unix_domains = { { name = 'unix' } }
+config.default_gui_startup_args = { 'connect', 'unix' }
 
-local act = wezterm.action
-
+-- Key bindings
 config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 8000 }
+
 config.keys = {
-  {
-    key = '[',
-    mods = 'LEADER',
-    action = act.Multiple {
-      act.SendKey { key = 's', mods = 'CTRL' },
-      act.ActivateKeyTable {
-        name = 'copy_mode',
-        one_shot = false,
-      },
-    },
-  },
---  {
---    key = '?',
---    mods = 'LEADER|SHIFT',
---    action = act.ActivateKeyTable {
---      name = 'search_mode',
---      one_shot = false,
---    },
---  },
-  --{ key = 'u', mods = 'LEADER|CTRL', action = act.ScrollByPage(-1) },
-  --{ key = 'd', mods = 'LEADER|CTRL', action = act.ScrollByPage(1) },
-  {
-    key = 'Space',
-    mods = 'LEADER|CTRL',
-    action = act.ActivateLastTab,
-  },
-  {
-    key = 'h',
-    mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Left',
-  },
-  {
-    key = 'j',
-    mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Down',
-  },
-  {
-    key = 'k',
-    mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Up',
-  },
-  {
-    key = 'l',
-    mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Right',
-  },
-  {
-    key = '"',
-    mods = 'LEADER|SHIFT',
+  -- Tab control and navigation
+  { key = 'c', mods = 'LEADER', action = act.SpawnTab 'CurrentPaneDomain' },
+  { key = 'p', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
+  { key = 'n', mods = 'LEADER', action = act.ActivateTabRelative(1) },
+  { key = 'Space', mods = 'LEADER|CTRL', action = act.ActivateLastTab },
+
+  -- Pane control and navigation
+  { key = 'h', mods = 'LEADER', action = act.ActivatePaneDirection 'Left' },
+  { key = 'j', mods = 'LEADER', action = act.ActivatePaneDirection 'Down' },
+  { key = 'k', mods = 'LEADER', action = act.ActivatePaneDirection 'Up' },
+  { key = 'l', mods = 'LEADER', action = act.ActivatePaneDirection 'Right' },
+  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
+  { key = '"', mods = 'LEADER|SHIFT',
     action = act.SplitVertical { domain = 'CurrentPaneDomain' },
 
   },
@@ -91,11 +46,11 @@ config.keys = {
     mods = 'LEADER|SHIFT',
     action = act.SplitHorizontal { domain = 'CurrentPaneDomain' },
   },
-  {
-    key = 'c',
-    mods = 'LEADER',
-    action = act.SpawnTab 'CurrentPaneDomain',
-  },
+
+  -- tmux style command palette
+  { key = ':', mods = 'LEADER|SHIFT', action = act.ActivateCommandPalette },
+
+
   {
     key = ',',
     mods = 'LEADER',
@@ -111,20 +66,20 @@ config.keys = {
       end),
     },
   },
-  { key = 'z', mods = 'LEADER', action = act.TogglePaneZoomState },
-}
 
-config.unix_domains = {
+  -- tmux style key bindings for search and copy
   {
-    name = 'unix',
+    key = '[',
+    mods = 'LEADER',
+    action = act.Multiple {
+      act.SendKey { key = 's', mods = 'CTRL' },
+      act.ActivateKeyTable {
+        name = 'copy_mode',
+        one_shot = false,
+      },
+    },
   },
 }
-
--- This causes `wezterm` to act as though it was started as
--- `wezterm connect unix` by default, connecting to the unix
--- domain on startup.
--- If you prefer to connect manually, leave out this line.
-config.default_gui_startup_args = { 'connect', 'unix' }
 
 config.key_tables = {
   copy_mode = {
@@ -132,15 +87,12 @@ config.key_tables = {
     { key = 'j', action = act.ScrollByLine(1) },
     { key = 'u', mods = 'CTRL', action = act.ScrollByPage(-1) },
     { key = 'd', mods = 'CTRL', action = act.ScrollByPage(1) },
-    { key = 'Escape', mods = 'CTRL', action = act.CopyMode 'Close' },
     { key = 'N', mods = 'SHIFT', action = act.CopyMode 'NextMatch' },
     { key = 'n', mods = 'NONE', action = act.CopyMode 'PriorMatch' },
     { key = 'DownArrow', mods = 'NONE', action = act.CopyMode 'NextMatch' },
     { key = 'UpArrow', mods = 'NONE', action = act.CopyMode 'PriorMatch' },
     { key="/", mods="NONE", action = act { Search = { CaseSensitiveString="" }}},
     { key="?", mods="SHIFT", action = act { Search = { CaseSensitiveString="" }}},
-    --{ key = 'r', mods = 'CTRL', action = act.CopyMode 'CycleMatchType' },
-    --{ key = 'u', mods = 'CTRL', action = act.CopyMode 'ClearPattern' },
     { key = 'Escape',
       action = act.Multiple {
         act.CopyMode 'Close',
@@ -158,42 +110,6 @@ config.key_tables = {
       },
     },
   },
-  search_mode = {
-    -- These are a hack as I don't know if there is a way to disable key
-    -- bindings that are currently active (in the preceding copy mode)
-    { key = 'k', mods = 'NONE', action = act.SendKey { key = 'k' }},
-    { key = 'j', mods = 'NONE', action = act.SendKey { key = 'j' }},
-    { key = 'n', mods = 'NONE', action = act.SendKey { key = 'n' }},
-    { key = 'N', mods = 'SHIFT', action = act.SendKey { key = 'N', mods = 'SHIFT' }},
-    { key = 'q', mods = 'NONE', action = act.SendKey { key = 'q' }},
-    { key = '/', mods = 'NONE', action = act.SendKey { key = '/' }},
-    { key = '?', mods = 'SHIFT', action = act.SendKey { key = '?', mods = 'SHIFT' }},
-    { key = 'Enter', mods = 'NONE', action = 'ActivateCopyMode'},
-    { key = 'Escape',
-      action = act.Multiple {
-        act.CopyMode 'Close',
-        'PopKeyTable',
-        'ScrollToBottom',
-      },
-    },
-  },
---  scroll = {
---    { key = 'k', action = act.ScrollByLine(-1) },
---    { key = 'j', action = act.ScrollByLine(1) },
---    { key = 'u', mods = 'CTRL', action = act.ScrollByPage(-1) },
---    { key = 'd', mods = 'CTRL', action = act.ScrollByPage(1) },
---    { key="/", mods="NONE", action = act { Search = { CaseSensitiveString="" }}},
---    { key="?", mods="SHIFT", action = act { Search = { CaseSensitiveString="" }}},
---    { key = 'q',
---      action = act.Multiple {
---        'PopKeyTable',
---        'ScrollToBottom',
---      },
---    },
---    { key = 'n', action = act.CopyMode 'PriorMatch' },
---    { key = 'N', action = act.CopyMode 'NextMatch' },
---    { key = 'c', mods = 'CTRL', action = act.CopyMode 'Close' },
---  },
 }
 
 for i = 1, 9 do
@@ -203,6 +119,15 @@ for i = 1, 9 do
     action = act.ActivateTab(i - 1),
   })
 end
+
+-- Show which key table is active in the status area
+wezterm.on('update-right-status', function(window, pane)
+  local name = window:active_key_table()
+  if name then
+    name = 'TABLE: ' .. name
+  end
+  window:set_right_status(name or '')
+end)
 
 -- The filled in variant of the < symbol
 local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
@@ -224,8 +149,6 @@ function tab_title(tab_info)
   -- in that tab
   return tab_info.active_pane.title
 end
-
-config.use_fancy_tab_bar = false
 
 --wezterm.on(
 --  'format-tab-title',
