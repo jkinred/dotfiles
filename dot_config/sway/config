@@ -15,6 +15,8 @@
 # NOTE: Font is not actually used, but size is
 font pango:Hack 14
 
+mouse_warping none
+
 bar {
     swaybar_command waybar
 }
@@ -32,6 +34,15 @@ gaps inner 10
 
     input "type:keyboard" {
         xkb_options ctrl:nocaps
+    }
+
+    input "type:touchpad" {
+        click_method clickfinger
+    }
+
+    input "type:pointer" {
+        accel_profile flat
+        pointer_accel 0.3
     }
 
 ### Key bindings
@@ -136,7 +147,9 @@ gaps inner 10
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    bindsym $mod+t focus mode_toggle
+
+    bindsym $mod+space exec fuzzel | xargs swaymsg exec --
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -160,16 +173,16 @@ gaps inner 10
         # right will grow the containers width
         # up will shrink the containers height
         # down will grow the containers height
-        bindsym $left resize shrink width 10px
-        bindsym $down resize grow height 10px
-        bindsym $up resize shrink height 10px
-        bindsym $right resize grow width 10px
+        bindsym $left resize shrink width 20px
+        bindsym $down resize grow height 20px
+        bindsym $up resize shrink height 20px
+        bindsym $right resize grow width 20px
 
         # Ditto, with arrow keys
-        bindsym Left resize shrink width 10px
-        bindsym Down resize grow height 10px
-        bindsym Up resize shrink height 10px
-        bindsym Right resize grow width 10px
+        bindsym Left resize shrink width 20px
+        bindsym Down resize grow height 20px
+        bindsym Up resize shrink height 20px
+        bindsym Right resize grow width 20px
 
         # Return to default mode
         bindsym Return mode "default"
@@ -180,11 +193,17 @@ gaps inner 10
 
 # Show which windows are using XWayland
 for_window [shell="xwayland"] title_format "[XWayland] %title"
-for_window [app_id="org.gnome.Calculator"] border none, floating enable
+for_window [app_id="org.gnome.Calculator"] border pixel 5, floating enable
+for_window [app_id="org.gnome.clocks"] border pixel 5, floating enable
 for_window [instance="dynalist"] floating enable
 
 # Zoom Meeting App
-#for_window [app_id="Zoom" title="^Zoom$"] border none, floating enable
+for_window [app_id="Zoom"] {
+    border normal
+    floating enable
+    move container to workspace 5
+    resize set width 780px height 600px
+}
 ## For specific Zoom windows
 #for_window [app_id="Zoom" title="^(Zoom|About)$"] border pixel, floating enable
 #for_window [app_id="Zoom" title="Settings"] floating enable, floating_minimum_size 960 x 700
@@ -212,8 +231,8 @@ bindsym $mod+Control+Shift+Up move workspace to output up
 set $WOBSOCK $XDG_RUNTIME_DIR/wob.sock
 
 # Volume control
-bindsym XF86AudioRaiseVolume exec pamixer -ui 5 && pamixer --get-volume > $WOBSOCK
-bindsym XF86AudioLowerVolume exec pamixer -ud 5 && pamixer --get-volume > $WOBSOCK
+bindsym XF86AudioRaiseVolume exec pamixer --allow-boost --unmute --increase 5 && pamixer --get-volume > $WOBSOCK
+bindsym XF86AudioLowerVolume exec pamixer --unmute --decrease 5 && pamixer --get-volume > $WOBSOCK
 bindsym XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $WOBSOCK ) || pamixer --get-volume > $WOBSOCK
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
@@ -236,9 +255,12 @@ bindsym XF86Messenger exec --no-startup-id playerctl previous
 exec swaync
 bindsym $mod+Shift+n exec swaync-client --toggle-panel --skip-wait
 
-exec wl-paste --type text --watch clipman store
+exec wl-paste --type text --watch clipman store --max-items=40
+bindsym $mod+Shift+v exec clipman pick --tool=CUSTOM --tool-args="fuzzel -d"
+bindsym $mod+Shift+t exec ~/.config/sway/scripts/totp.sh
 
 exec_always systemctl --user start sway-session.target
+exec_always systemctl --user restart kanshi.service
 exec dbus-update-activation-environment --all
 #exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway XDG_SESSION_DESKTOP=sway[
 

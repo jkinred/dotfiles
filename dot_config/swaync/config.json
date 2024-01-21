@@ -21,12 +21,6 @@
   "hide-on-clear": false,
   "hide-on-action": true,
   "script-fail-notify": true,
-  "scripts": {
-    "example-script": {
-      "exec": "echo 'Do something...'",
-      "urgency": "Normal"
-    }
-  },
   "notification-visibility": {
     "example-name": {
       "state": "muted",
@@ -81,19 +75,19 @@
         "actions": [ 
           {
             "label": "   Reboot",
-            "command": "systemctl reboot"
+            "command": "swaynag -t warning -m 'Do you really want to reboot?' -B 'Yes, reboot' 'systemctl reboot'"
           },
           {
             "label": "   Lock",
-            "command": "swaylock --daemonize"
+            "command": "swaync-client --toggle-panel --skip-wait && sleep 1 && swaylock --daemonize"
           },
           {
             "label": "   Logout",
-            "command": "loginctl terminate-session ${XDG_SESSION_ID-}"
+            "command": "swaynag -t warning -m 'Do you really want to logout?' -B 'Yes, logout' 'swaymsg exit'"
           },
           {
             "label": "   Shut down",
-            "command": "systemctl poweroff"
+            "command": "swaynag -t warning -m 'Do you really want to reboot?' -B 'Yes, shut down' 'systemctl poweroff'"
           }
         ]
       },
