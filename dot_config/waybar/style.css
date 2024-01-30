@@ -130,6 +130,7 @@ window#waybar {
 #custom-power,
 #custom-notification,
 #custom-clipboard,
+#custom-launcher,
 #mpd {
     padding: 5px 8px;
     border-style: solid;
@@ -322,8 +323,9 @@ window#waybar {
 #custom-launcher {
     background-color: shade(@base, 1.1);
     color: @mauve;
-    border-radius: 0px 15px 15px 0px;
+    border-radius: 10px 10px 10px 10px;
     padding: 5px 10px 5px 10px;
+    margin-left: 5px;
 }
 
 #custom-power {
@@ -337,10 +339,8 @@ window#waybar {
 
 #custom-notification {
     color: #d8dee9;
-    /* border-bottom: 2px solid #d8dee9; */
     border-radius: 10px 10px 10px 10px;
-    /*border-radius: 0 10px 10px 0;*/
-    margin-right: 10px;
+    margin-right: 5px;
     padding: 5px 10px;
 }
 
