@@ -1,6 +1,6 @@
 {
   "layer": "top", // Waybar at top layer
-  "output": "eDP-1",
+  "output": "Lenovo Group Limited P27h-20 V9075P1R",
   "position": "top", // Waybar position (top|bottom|left|right)
   //"height": 55,
   "margin": "0 0 0 0",
