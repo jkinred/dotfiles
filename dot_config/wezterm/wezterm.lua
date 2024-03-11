@@ -7,11 +7,12 @@ local config = {}
 if wezterm.config_builder then
   config = wezterm.config_builder()
 end
- 
+
 config.color_scheme = 'Catppuccin Macchiato'
 config.enable_scroll_bar = true
 config.font = wezterm.font 'Hack'
 config.font_size = 18.0
+config.hide_mouse_cursor_when_typing = false
 config.pane_focus_follows_mouse = true
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
@@ -102,6 +103,35 @@ config.key_tables = {
       },
     },
     { key = 'q',
+      action = act.Multiple {
+        act.CopyMode 'Close',
+        'PopKeyTable',
+        'ScrollToBottom',
+        act.SendKey { key = 'q', mods = 'CTRL' },
+      },
+    },
+    { key = 'c',
+      mods = 'CTRL',
+      action = act.Multiple {
+        act.CopyMode 'Close',
+        'PopKeyTable',
+        'ScrollToBottom',
+        act.SendKey { key = 'q', mods = 'CTRL' },
+      },
+    },
+  },
+  search_mode = {
+    -- These are a hack as I don't know if there is a way to disable key
+    -- bindings that are currently active (in the preceding copy mode)
+    { key = 'k', mods = 'NONE', action = act.SendKey { key = 'k' }},
+    { key = 'j', mods = 'NONE', action = act.SendKey { key = 'j' }},
+    { key = 'n', mods = 'NONE', action = act.SendKey { key = 'n' }},
+    { key = 'N', mods = 'SHIFT', action = act.SendKey { key = 'N', mods = 'SHIFT' }},
+    { key = 'q', mods = 'NONE', action = act.SendKey { key = 'q' }},
+    { key = '/', mods = 'NONE', action = act.SendKey { key = '/' }},
+    { key = '?', mods = 'SHIFT', action = act.SendKey { key = '?', mods = 'SHIFT' }},
+    { key = 'Enter', mods = 'NONE', action = 'ActivateCopyMode'},
+    { key = 'Escape',
       action = act.Multiple {
         act.CopyMode 'Close',
         'PopKeyTable',
