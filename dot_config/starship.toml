@@ -114,17 +114,27 @@ style = "bold red"
 [character]
 success_symbol = "[➜](bold green)"
 error_symbol = "[➜](red)"
-vicmd_symbol = "[❮](green)"
+#vicmd_symbol = "[❮](bold green)"
+vicmd_symbol = "[cmd ➜](bold green)"
 
 #[character]
 #success_symbol = "[\\$](bold green)"
 #error_symbol = '[✗](bold red) '
 
-[kubernetes]
-format = '[⛵ $context \($namespace\)](dimmed blue) '
-disabled = false
+#[kubernetes]
+#format = '[⛵ $context \($namespace\)](dimmed blue) '
+#disabled = false
+#
+#[kubernetes.context_aliases]
+#'dev.local.cluster.k8s' = 'dev'
+#'arn:aws:eks:(?P<var_region>[\w-]+):\d+:cluster/(?P<var_cluster>[\w-]+)$' = '$var_cluster.$var_region'
+#'\d+@(?P<var_cluster>[\w-]+)\.(?P<var_region>[\w-]+)\.eksctl.io$' = '$var_cluster.$var_region'
 
-[kubernetes.context_aliases]
-'dev.local.cluster.k8s' = 'dev'
-'arn:aws:eks:(?P<var_region>[\w-]+):\d+:cluster/(?P<var_cluster>[\w-]+)$' = '$var_cluster.$var_region'
-'\d+@(?P<var_cluster>[\w-]+)\.(?P<var_region>[\w-]+)\.eksctl.io$' = '$var_cluster.$var_region'
+[kubernetes]
+symbol = "⛵ "
+disabled = false
+contexts = [
+    { context_pattern = "dev.*", style = "green" },
+    { context_pattern = "staging.*", style = "yellow" },
+    { context_pattern = "prod.*", style = "red" },
+]
