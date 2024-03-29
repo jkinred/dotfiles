@@ -1,0 +1,148 @@
+{
+  "settings": {
+    "loglevel": "warning"
+  },
+  "menu": [
+    {
+      "type": "command",
+      "title": "Global",
+      "command": "gopass totp -c AWS/Identity/mfa_code",
+      "instancing": "singleInstance",
+      "icon": "dialog-password",
+      "killOnDisable": false
+    },
+    {
+      "type": "command",
+      "title": "Reset pcscsd",
+      "command": "sudo systemctl restart pcscd && sudo systemctl restart pcscd && sudo systemctl restart pcscd",
+      "instancing": "singleInstance",
+      "icon": "view-refresh",
+      "killOnDisable": false
+    },
+    {
+      "type": "submenu",
+      "title": "MFA",
+      "icon": "system-lock-screen",
+      "items": [
+        {
+          "type": "command",
+          "title": "LF Services",
+          "command": "gopass totp -c lfid-totp",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "LF Staging",
+          "command": "gopass totp -c lf-staging-totp",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "LF 1Password",
+          "command": "gopass totp -c linuxfoundation.1password.com_mfa",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "LF Gitlab",
+          "command": "gopass totp -c gitlab_lf/mfa",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "Classic",
+          "command": "gopass totp -c AWS/Classic/mfa_code",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        }
+      ]
+    },
+    {
+      "type": "submenu",
+      "title": "Passwords",
+      "icon": "system-lock-screen",
+      "items": [
+        {
+          "type": "command",
+          "title": "LF",
+          "command": "gopass show --password lf | gpaste-client add-password lf",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "1Password",
+          "command": "gopass show --password linuxfoundation.1password.com | gpaste-client add-password 1password",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        }
+      ]
+    },
+    {
+      "type": "submenu",
+      "title": "Fixes",
+      "icon": "preferences-system",
+      "items": [
+        {
+          "type": "command",
+          "title": "Tweak trackpoint",
+          "command": "gnome-terminal -e 'journalctl -f GNOME_SHELL_EXTENSION_UUID=guillotine@fopdoodle.net' ",
+          "command": "gnome-terminal -e 'bash -x /home/jonathan/trackpoint'",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "Restart gpaste",
+          "command": "killall gpaste-daemon && gpaste-client add Restarted",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        }
+      ]
+    },
+    {
+      "type": "submenu",
+      "title": "Guillotine",
+      "icon": "guillotine-symbolic",
+      "items": [
+        {
+          "type": "command",
+          "title": "Configuration",
+          "command": "xdg-open .config/guillotine.json",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "Log",
+          "command": "gnome-terminal -e 'journalctl -f GNOME_SHELL_EXTENSION_UUID=guillotine@fopdoodle.net' ",
+          "instancing": "singleInstance",
+          "icon": "emblem-documents-symbolic",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
+          "title": "Log gnome-shell",
+          "command": "gnome-terminal -e 'journalctl -f _COMM=gnome-shell' ",
+          "instancing": "singleInstance",
+          "icon": "emblem-documents-symbolic",
+          "killOnDisable": false
+        }
+      ]
+    }
+  ]
+}
