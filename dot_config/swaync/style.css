@@ -85,11 +85,19 @@
   font-family: "Hack Nerd Font";
   font-size: 20px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px #363a4f;
-  border-radius: 12.6px;
+  border: 2px solid #34548a;
   margin: 18px;
   background-color: #24273a;
   color: #cad3f5;
   padding: 14px;
+}
+
+.control-center-list {
+  background: transparent;
+}
+
+.control-center-list-placeholder {
+  opacity: 0.5;
 }
 
 .control-center .widget-title {
@@ -115,6 +123,11 @@
   box-shadow: inset 0 0 0 1px #494d64;
   background-color: #7dc4e4;
   color: #24273a;
+}
+
+.toggle:checked {
+  background-color: red;
+  color: blue;
 }
 
 .control-center .notification-row .notification-background {
@@ -269,4 +282,53 @@ trough {
   background: #494d64;
   border-radius: 8px;
   border: 1px solid #6e738d;
+}
+
+
+.widget-menubar>box{
+  padding: 8px 0px 4px;
+  margin: 0px 8px;
+  border-radius: 4px 4px 0px 0px;
+  background-color: @noti-bg;
+}
+
+.widget-menubar > box > .menu-button-bar > button {
+  border: 1px solid @noti-border-color;
+  border-radius: 4px;
+  margin: 4px 12px;
+  padding: 20px;
+  border-radius: 7px;
+  color: #cad3f5;
+  box-shadow: inset 0 0 0 1px #494d64;
+  padding: 8px 30px 8px 30px;
+}
+
+.widget-menubar > box > .menu-button-bar > button:hover {
+  background-color: #ee99a0;
+  color: #24273a;
+}
+
+.topbar-buttons > button {
+  border: none;
+  background: transparent;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button {
+  margin: 3px;
+  background: @cc-bg;
+  border-radius: 5px;
+  color: @text-color;
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+  background: rgba(122, 162, 247, 1);
+  color: @cc-bg;
+}
+
+.widget-buttons-grid {
+  font-size: x-large;
+  padding: 5px;
+  margin: 5px 10px 10px 10px;
+  border-radius: 5px;
+  background: @noti-bg-darker;
 }
