@@ -1,0 +1,28 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetpack-io/devbox/0.10.2/.schema/devbox.schema.json",
+  "packages": [
+    "yq-go@latest",
+    "nodejs@16.15.1",
+    "kubectl@1.29.2",
+    "poetry@1.8.2",
+    "k9s@latest",
+    "awscli@latest",
+    "aws-vault@latest",
+    "argocd@2.6.7",
+    "shellcheck@0.8.0",
+    "krew@0.4.3",
+    "jsonnet@0.20.0",
+    "chezmoi@latest",
+    "direnv@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo 'Welcome to devbox!' > /dev/null"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  }
+}
