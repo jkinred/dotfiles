@@ -1,26 +1,53 @@
 local wezterm = require 'wezterm'
-
 local act = wezterm.action
 local config = {}
-
 
 if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
+config.audible_bell = 'Disabled'
 config.color_scheme = 'Catppuccin Macchiato'
 config.enable_scroll_bar = true
+--config.enable_wayland = false
 config.font = wezterm.font 'Hack'
-config.font_size = 18.0
-config.hide_mouse_cursor_when_typing = false
+config.font_size = 16.0
+--config.front_end = 'WebGpu'
+config.hide_mouse_cursor_when_typing = true
+config.inactive_pane_hsb = {
+  saturation = 0.6,
+  brightness = 0.8,
+}
 config.pane_focus_follows_mouse = true
+config.scrollback_lines = 20000
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
+--config.webgpu_preferred_adapter = {
+--  backend = 'Vulkan',
+--  device = 9660,
+--  device_type = 'DiscreteGpu',
+--  driver = 'NVIDIA',
+--  driver_info = '550.54.15',
+--  name = 'NVIDIA RTX A1000 6GB Laptop GPU',
+--  vendor = 4318,
+--}
 config.window_background_opacity = 0.9
+--config.window_decorations = "RESIZE"
 
 -- Automatically connect to a running domain
 config.unix_domains = { { name = 'unix' } }
 config.default_gui_startup_args = { 'connect', 'unix' }
+
+config.visual_bell = {
+  fade_in_function = 'EaseIn',
+  fade_in_duration_ms = 150,
+  fade_out_function = 'EaseOut',
+  fade_out_duration_ms = 150,
+}
+
+config.colors = {
+  visual_bell = '#202020',
+}
 
 -- Key bindings
 config.leader = { key = 'Space', mods = 'CTRL', timeout_milliseconds = 8000 }
@@ -73,7 +100,7 @@ config.keys = {
     key = '[',
     mods = 'LEADER',
     action = act.Multiple {
-      act.SendKey { key = 's', mods = 'CTRL' },
+      --act.SendKey { key = 's', mods = 'CTRL' },
       act.ActivateKeyTable {
         name = 'copy_mode',
         one_shot = false,
@@ -86,20 +113,21 @@ config.key_tables = {
   copy_mode = {
     { key = 'k', action = act.ScrollByLine(-1) },
     { key = 'j', action = act.ScrollByLine(1) },
+    { key = 's', mods = 'CTRL', action = act.CopyMode 'ClearPattern' },
     { key = 'u', mods = 'CTRL', action = act.ScrollByPage(-1) },
     { key = 'd', mods = 'CTRL', action = act.ScrollByPage(1) },
     { key = 'N', mods = 'SHIFT', action = act.CopyMode 'NextMatch' },
     { key = 'n', mods = 'NONE', action = act.CopyMode 'PriorMatch' },
     { key = 'DownArrow', mods = 'NONE', action = act.CopyMode 'NextMatch' },
     { key = 'UpArrow', mods = 'NONE', action = act.CopyMode 'PriorMatch' },
-    { key="/", mods="NONE", action = act { Search = { CaseSensitiveString="" }}},
-    { key="?", mods="SHIFT", action = act { Search = { CaseSensitiveString="" }}},
+    { key = "/", mods = "NONE", action = act { Search = { CaseSensitiveString="" }}},
+    { key = "?", mods = "SHIFT", action = { Search = { CaseSensitiveString = "" }}},
     { key = 'Escape',
       action = act.Multiple {
         act.CopyMode 'Close',
         'PopKeyTable',
         'ScrollToBottom',
-        act.SendKey { key = 'q', mods = 'CTRL' },
+        --act.SendKey { key = 'q', mods = 'CTRL' },
       },
     },
     { key = 'q',
@@ -107,7 +135,7 @@ config.key_tables = {
         act.CopyMode 'Close',
         'PopKeyTable',
         'ScrollToBottom',
-        act.SendKey { key = 'q', mods = 'CTRL' },
+        --act.SendKey { key = 'q', mods = 'CTRL' },
       },
     },
     { key = 'c',
@@ -116,7 +144,7 @@ config.key_tables = {
         act.CopyMode 'Close',
         'PopKeyTable',
         'ScrollToBottom',
-        act.SendKey { key = 'q', mods = 'CTRL' },
+        --act.SendKey { key = 'q', mods = 'CTRL' },
       },
     },
   },
@@ -136,7 +164,7 @@ config.key_tables = {
         act.CopyMode 'Close',
         'PopKeyTable',
         'ScrollToBottom',
-        act.SendKey { key = 'q', mods = 'CTRL' },
+        --act.SendKey { key = 'q', mods = 'CTRL' },
       },
     },
   },
