@@ -501,6 +501,54 @@
         }
       }
     },
+    "kubelogin-oidc@latest": {
+      "last_modified": "2024-03-22T11:26:23Z",
+      "resolved": "github:NixOS/nixpkgs/a3ed7406349a9335cb4c2a71369b697cecd9d351#kubelogin-oidc",
+      "source": "devbox-search",
+      "version": "1.28.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/c0sfi8l0kyq0jnlgjb2w81nx7zs9vjf0-kubelogin-1.28.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/c0sfi8l0kyq0jnlgjb2w81nx7zs9vjf0-kubelogin-1.28.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/zwmdgq4f4mr1m6zwksxss4442rrbfx9c-kubelogin-1.28.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/zwmdgq4f4mr1m6zwksxss4442rrbfx9c-kubelogin-1.28.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/3avb4nxljca7p4w4nbnzvgzfb8pbag1j-kubelogin-1.28.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/3avb4nxljca7p4w4nbnzvgzfb8pbag1j-kubelogin-1.28.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/q5db3yng71wcf08w3n540vqdyld50pyk-kubelogin-1.28.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/q5db3yng71wcf08w3n540vqdyld50pyk-kubelogin-1.28.0"
+        }
+      }
+    },
     "nodejs@16.15.1": {
       "last_modified": "2022-06-02T17:14:19Z",
       "plugin_version": "0.0.2",

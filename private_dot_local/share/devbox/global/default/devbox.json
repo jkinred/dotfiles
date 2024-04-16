@@ -13,7 +13,8 @@
     "krew@0.4.3",
     "jsonnet@0.20.0",
     "chezmoi@latest",
-    "direnv@latest"
+    "direnv@latest",
+    "kubelogin-oidc@latest"
   ],
   "shell": {
     "init_hook": [
