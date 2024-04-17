@@ -41,3 +41,5 @@
 	defaultBranch = main
 [merge]
 	tool = vimdiff
+[rebase]
+	autoStash = true
