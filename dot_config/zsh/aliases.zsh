@@ -20,4 +20,4 @@ alias vimdiff="nvim -d"
 alias lg=lazygit
 alias gpa='gpaste-client add'
 alias wakenas='wol f4:39:09:02:1b:1f'
-alias asdf='eval "$(mise activate zsh)"'
+alias asdf='eval "$(mise activate zsh)" && export PATH=$HOME/.local/bin:/usr/lib64/ccache:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin && unset PYTHONPATH'
