@@ -27,6 +27,6 @@ return {
   { import = "astrocommunity.pack.go" },
   { import = "astrocommunity.pack.json" },
   -- { import = "astrocommunity.pack.markdown" },
-  { import = "astrocommunity.pack.python" },
+  { import = "astrocommunity.pack.python-ruff" },
   { import = "astrocommunity.pack.terraform" },
 }
