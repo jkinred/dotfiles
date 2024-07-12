@@ -21,7 +21,7 @@ return {
   { import = "astrocommunity.git.blame-nvim" },
   { import = "astrocommunity.git.diffview-nvim" },
   { import = "astrocommunity.git.gitlinker-nvim" },
-  { import = "astrocommunity.git.neogit" },
+  -- { import = "astrocommunity.git.neogit" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.pack.bash" },
   { import = "astrocommunity.pack.go" },

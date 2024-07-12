@@ -29,8 +29,8 @@
 	template = ~/.git-commit-template
 [tag]
 	sort = -version:refname
-#[url "ssh://git@github.com/"]
-#	insteadOf = https://github.com/
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
 [url "ssh://git@github.com/jkinred"]
 	insteadOf = https://github.com/jkinred
 [url "ssh://git@github.com/LF-Engineering"]
