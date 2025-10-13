@@ -5,7 +5,7 @@
   "menu": [
     {
       "type": "command",
-      "title": "Global",
+      "title": "AWS MFA",
       "command": "gopass totp -c AWS/Identity/mfa_code",
       "instancing": "singleInstance",
       "icon": "dialog-password",
@@ -13,10 +13,42 @@
     },
     {
       "type": "command",
-      "title": "Reset pcscsd",
-      "command": "sudo systemctl restart pcscd && sudo systemctl restart pcscd && sudo systemctl restart pcscd",
+      "title": "OCI MFA",
+      "command": "gopass totp -c identity.oraclecloud.com_mfa",
       "instancing": "singleInstance",
-      "icon": "view-refresh",
+      "icon": "dialog-password",
+      "killOnDisable": false
+    },
+    {
+      "type": "command",
+      "title": "LF MFA",
+      "command": "gopass totp -c lfid-totp",
+      "instancing": "singleInstance",
+      "icon": "preferences-other-symbolic",
+      "killOnDisable": false
+    },
+    {
+      "type": "command",
+      "title": "GHA",
+      "command": "gopass -c github_jkinred-lfa",
+      "instancing": "singleInstance",
+      "icon": "dialog-password",
+      "killOnDisable": false
+    },
+    {
+      "type": "command",
+      "title": "GHA MFA",
+      "command": "gopass totp -c github_jkinred-lfa-mfa",
+      "instancing": "singleInstance",
+      "icon": "dialog-password",
+      "killOnDisable": false
+    },
+    {
+      "type": "command",
+      "title": "1Password",
+      "command": "gopass -c linuxfoundation.1password.com",
+      "instancing": "singleInstance",
+      "icon": "preferences-other-symbolic",
       "killOnDisable": false
     },
     {
@@ -24,14 +56,6 @@
       "title": "MFA",
       "icon": "system-lock-screen",
       "items": [
-        {
-          "type": "command",
-          "title": "LF Services",
-          "command": "gopass totp -c lfid-totp",
-          "instancing": "singleInstance",
-          "icon": "preferences-other-symbolic",
-          "killOnDisable": false
-        },
         {
           "type": "command",
           "title": "LF Staging",
@@ -78,14 +102,6 @@
           "instancing": "singleInstance",
           "icon": "preferences-other-symbolic",
           "killOnDisable": false
-        },
-        {
-          "type": "command",
-          "title": "1Password",
-          "command": "gopass show --password linuxfoundation.1password.com | gpaste-client add-password 1password",
-          "instancing": "singleInstance",
-          "icon": "preferences-other-symbolic",
-          "killOnDisable": false
         }
       ]
     },
@@ -96,8 +112,15 @@
       "items": [
         {
           "type": "command",
+          "title": "Reset pcscsd",
+          "command": "sudo /usr/bin/systemctl restart pcscd.service",
+          "instancing": "singleInstance",
+          "icon": "view-refresh",
+          "killOnDisable": false
+        },
+        {
+          "type": "command",
           "title": "Tweak trackpoint",
-          "command": "gnome-terminal -e 'journalctl -f GNOME_SHELL_EXTENSION_UUID=guillotine@fopdoodle.net' ",
           "command": "gnome-terminal -e 'bash -x /home/jonathan/trackpoint'",
           "instancing": "singleInstance",
           "icon": "preferences-other-symbolic",

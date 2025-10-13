@@ -4,7 +4,7 @@ early-exit = true
 # Select the tool on startup [possible values: pointer, crop, line, arrow, rectangle, text, marker, blur, brush]
 initial-tool = "rectangle"
 # Configure the command to be called on copy, for example `wl-copy`
-copy-command = "wl-copy"
+copy-command = "wl-copy --type image/png"
 # Increase or decrease the size of the annotations
 #annotation-size-factor = 2
 # Filename to use for saving action. Omit to disable saving to file. Might contain format specifiers: https://docs.rs/chrono/latest/chrono/format/strftime/index.html
@@ -25,9 +25,11 @@ style = "Bold"
 
 # custom colours for the colour palette
 [color-palette]
-first = "#dc143c"
-second = "#008000"
-third = "#a52a2a"
-fourth = "#ff1493"
-fifth = "#ffd700"
-custom = "#00ffff"
+palette = [
+  "#dc143c",
+  "#008000",
+  "#a52a2a",
+  "#ff1493",
+  "#ffd700",
+  "#00ffff"
+]

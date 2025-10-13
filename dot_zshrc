@@ -74,13 +74,14 @@ function zvm_config() {
 }
 
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+VI_MODE_DISABLE_CLIPBOARD=true
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aliases aws direnv fzf git gpg-agent kubectl ripgrep starship zsh-autosuggestions zsh-syntax-highlighting vi-mode z)
+plugins=(aliases aws direnv fzf git gpg-agent kubectl starship zsh-autosuggestions zsh-syntax-highlighting vi-mode z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,3 +110,4 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias cat=bat

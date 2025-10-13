@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local act = wezterm.action
+local mux = wezterm.mux
 local config = {}
 
 if wezterm.config_builder then
@@ -93,7 +94,7 @@ config.keys = {
 		mods = "LEADER",
 		action = act.ActivatePaneDirection("Right"),
 	},
-	{ key = "z",     mods = "LEADER",      action = act.TogglePaneZoomState },
+	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 	{
 		key = '"',
 		mods = "LEADER|SHIFT",

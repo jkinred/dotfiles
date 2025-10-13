@@ -29,4 +29,5 @@ return {
   -- { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.python-ruff" },
   { import = "astrocommunity.pack.terraform" },
+  { import = "astrocommunity.recipes.ai" },
 }

@@ -43,3 +43,9 @@
 	tool = vimdiff
 [rebase]
 	autoStash = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/home/jonathan/.nix-profile/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/home/jonathan/.nix-profile/bin/gh auth git-credential
