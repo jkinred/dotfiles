@@ -1,7 +1,6 @@
 #!/bin/bash
 #
-if [ -x /bin/grep ];
-then
+if [ -x /bin/grep ]; then
     alias showbigfiles="sudo -E GLOBIGNORE=".:.." du -hsx * .[0-9a-zA-Z]* | grep -E '([0-9][0-9][0-9]M|[0-9]G)' | sort -h"
 fi
 
@@ -21,3 +20,4 @@ alias lg=lazygit
 alias gpa='gpaste-client add'
 alias wakenas='wol f4:39:09:02:1b:1f'
 alias asdf='eval "$(mise activate zsh)" && export PATH=$HOME/.local/bin:/usr/lib64/ccache:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin && unset PYTHONPATH'
+alias vibe='ssh -p 2022 jonathan@localhost'
