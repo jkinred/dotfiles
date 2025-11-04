@@ -5,6 +5,14 @@
   "menu": [
     {
       "type": "command",
+      "title": "1Password",
+      "command": "gopass show --password linuxfoundation.1password.com | gpaste-client add-password 1password",
+      "instancing": "singleInstance",
+      "icon": "preferences-other-symbolic",
+      "killOnDisable": false
+    },
+    {
+      "type": "command",
       "title": "AWS MFA",
       "command": "gopass totp -c AWS/Identity/mfa_code",
       "instancing": "singleInstance",
@@ -41,14 +49,6 @@
       "command": "gopass totp -c github_jkinred-lfa-mfa",
       "instancing": "singleInstance",
       "icon": "dialog-password",
-      "killOnDisable": false
-    },
-    {
-      "type": "command",
-      "title": "1Password",
-      "command": "gopass -c linuxfoundation.1password.com",
-      "instancing": "singleInstance",
-      "icon": "preferences-other-symbolic",
       "killOnDisable": false
     },
     {
@@ -112,14 +112,6 @@
       "items": [
         {
           "type": "command",
-          "title": "Reset pcscsd",
-          "command": "sudo /usr/bin/systemctl restart pcscd.service",
-          "instancing": "singleInstance",
-          "icon": "view-refresh",
-          "killOnDisable": false
-        },
-        {
-          "type": "command",
           "title": "Tweak trackpoint",
           "command": "gnome-terminal -e 'bash -x /home/jonathan/trackpoint'",
           "instancing": "singleInstance",
@@ -141,14 +133,7 @@
       "title": "Guillotine",
       "icon": "guillotine-symbolic",
       "items": [
-        {
-          "type": "command",
-          "title": "Configuration",
-          "command": "xdg-open .config/guillotine.json",
-          "instancing": "singleInstance",
-          "icon": "preferences-other-symbolic",
-          "killOnDisable": false
-        },
+
         {
           "type": "command",
           "title": "Log",
@@ -166,6 +151,14 @@
           "killOnDisable": false
         }
       ]
-    }
+    },
+       {
+          "type": "command",
+          "title": "Configuration",
+          "command": "xdg-open .config/guillotine.json",
+          "instancing": "singleInstance",
+          "icon": "preferences-other-symbolic",
+          "killOnDisable": false
+        }
   ]
 }
