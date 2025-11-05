@@ -52,6 +52,14 @@ config.colors = {
 config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 8000 }
 
 config.keys = {
+	-- Claude Code multi-line input
+	{
+		key = "Enter",
+		mods = "SHIFT",
+		action = wezterm.action({
+			SendString = "\x1b\r",
+		}),
+	},
 	-- Tab control and navigation
 	{
 		key = "c",
@@ -94,7 +102,7 @@ config.keys = {
 		mods = "LEADER",
 		action = act.ActivatePaneDirection("Right"),
 	},
-	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
+	{ key = "z",     mods = "LEADER",      action = act.TogglePaneZoomState },
 	{
 		key = '"',
 		mods = "LEADER|SHIFT",
