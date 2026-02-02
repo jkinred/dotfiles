@@ -7,10 +7,26 @@ if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
 
+function get_appearance()
+	if wezterm.gui then
+		return wezterm.gui.get_appearance()
+	end
+	return "Dark"
+end
+
+function scheme_for_appearance(appearance)
+	if appearance:find("Dark") then
+		return "Catppuccin Macchiato"
+	else
+		return "Catppuccin Latte"
+	end
+end
+
 config.audible_bell = "Disabled"
-config.color_scheme = "Catppuccin Macchiato"
+-- config.color_scheme = "Catppuccin Macchiato"
+config.color_scheme = scheme_for_appearance(get_appearance())
 config.enable_scroll_bar = true
---config.enable_wayland = false
+-- config.enable_wayland = true
 config.font_size = 18.0
 config.hide_mouse_cursor_when_typing = true
 config.inactive_pane_hsb = {
@@ -21,17 +37,17 @@ config.pane_focus_follows_mouse = true
 config.scrollback_lines = 20000
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
---config.webgpu_preferred_adapter = {
---  backend = 'Vulkan',
---  device = 9660,
---  device_type = 'DiscreteGpu',
---  driver = 'NVIDIA',
---  driver_info = '550.54.15',
---  name = 'NVIDIA RTX A1000 6GB Laptop GPU',
---  vendor = 4318,
---}
+-- config.webgpu_preferred_adapter = {
+-- 	backend = "Vulkan",
+-- 	device = 9660,
+-- 	device_type = "DiscreteGpu",
+-- 	driver = "NVIDIA",
+-- 	driver_info = "580.95.05",
+-- 	name = "NVIDIA RTX A1000 6GB Laptop GPU",
+-- 	vendor = 4318,
+-- }
+-- config.front_end = "WebGpu"
 config.window_background_opacity = 0.9
---config.window_decorations = "RESIZE"
 
 -- Automatically connect to a running domain
 config.unix_domains = { { name = "unix" } }
@@ -102,7 +118,7 @@ config.keys = {
 		mods = "LEADER",
 		action = act.ActivatePaneDirection("Right"),
 	},
-	{ key = "z",     mods = "LEADER",      action = act.TogglePaneZoomState },
+	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
 	{
 		key = '"',
 		mods = "LEADER|SHIFT",
