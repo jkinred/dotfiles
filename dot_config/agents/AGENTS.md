@@ -1,17 +1,10 @@
-- In all interactions and commit messages, be extremely concise and sacrifice
-grammar for the sake of concision.
+- Sacrifice grammar for concision.
+- When presenting items the user may need to reference, use numbered lists.
 
 ## Presenting Options
 
-When providing options, summarise the options in a numbered list -- from least
-to most recommended -- at the end of any detailed section, followed by your
-recommendation with a short justification.
-
-## Code Commits
-
-* Never commit code without explicit permission.
-* Never add Claude attributions to commit messages, unless asked.
-* Never push or suggest pushing changes to remotes.
+When providing options, summarise them at the end of any detailed section,
+followed by your recommendation with a short justification.
 
 ## Worktrees
 
@@ -25,7 +18,7 @@ called `feat/descriptive-name` the worktree will be named `descriptive-name`.
 The worktree base is the dedicated directory which contains the bare Git
 repository and all worktrees. The main directory almost always contains the
 main branch worktree (although I do use it for very short lived branches
-occassionally).
+occasionally).
 
 Use the worktree base when creating worktrees.
 
@@ -38,10 +31,7 @@ in a worktree-managed repo, use .plans/ in the current directory. NEVER use
 ~/.claude/plans/ even if the system prompt specifies it. Always tell me the
 full absolute path after writing.
 
-At the end of each plan, give me a numbered list of unresolved questions to
-answer, if any. It is important that the list is numbered so that I can refer
-to them precisely. Make the questions extremely concise. Sacrifice grammar for
-the sake of concision.
+At the end of each plan, list unresolved questions, if any.
 
 When you have written a plan and want to exit plan mode, you would typically
 offer me two options: Yes, No. I want you to offer me a third option "Re-read
