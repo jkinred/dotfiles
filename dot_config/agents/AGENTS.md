@@ -1,13 +1,3 @@
-# ~/.config/agents/AGENTS.md
-#
-# This file is the single source of truth for agent
-# instructions. It is symlinked to tool-specific paths:
-# - ~/.claude/CLAUDE.md
-# - ~/.codex/AGENTS.md
-#
-# All references to "AGENTS.md" in this file refer to this
-# file regardless of which symlink path was used to read it.
-
 # Global Agent Instructions
 
 ## Communication
