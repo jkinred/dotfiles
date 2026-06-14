@@ -22,6 +22,19 @@ return {
       virtual_text = true,
       underline = true,
     },
+    -- passed to `vim.filetype.add`
+    filetypes = {
+      -- see `:h vim.filetype.add` for usage
+      extension = {
+        foo = "fooscript",
+      },
+      filename = {
+        [".foorc"] = "fooscript",
+      },
+      pattern = {
+        [".*/etc/foo/.*"] = "fooscript",
+      },
+    },
     -- vim options can be configured here
     options = {
       opt = { -- vim.opt.<key>
@@ -53,24 +66,22 @@ return {
         H = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
 
         -- mappings seen under group name "Buffer"
-        ["<Leader>bD"] = {
+        ["<Leader>bd"] = {
           function()
             require("astroui.status.heirline").buffer_picker(
               function(bufnr) require("astrocore.buffer").close(bufnr) end
             )
           end,
-          desc = "Pick to close",
+          desc = "Close buffer from tabline",
         },
+
         -- tables with just a `desc` key will be registered with which-key if it's installed
         -- this is useful for naming menus
-        ["<Leader>b"] = { desc = "Buffers" },
-        -- quick save
-        -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
-        ["<Leader>gl"] = { "<cmd>ToggleBlame virtual<cr>", desc = "Toggle Git blame" },
-      },
-      t = {
+        -- ["<Leader>b"] = { desc = "Buffers" },
+        -- ["<Leader>gl"] = { "<cmd>ToggleBlame virtual<cr>", desc = "Toggle Git blame" },
+
         -- setting a mapping to false will disable it
-        -- ["<esc>"] = false,
+        -- ["<C-S>"] = false,
       },
     },
   },
